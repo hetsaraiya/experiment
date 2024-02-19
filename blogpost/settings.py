@@ -29,22 +29,29 @@ SECRET_KEY = 'django-insecure-i%)s)7z+&wv6++)bi=5!%d$dk)$qfb1hpzwmun06-n#!b$)%ct
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [ "het.tecklive.com", "127.0.0.1", "localhost" ]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React development server
     "http://127.0.0.1:3001",  # React development server
     "http://localhost:8000",  # React development server
-    "http://127.0.0.1:8001",  # React development server
+    "http://127.0.0.1:8001", 
+    "https://het.tecklive.com", 
     # Add other origins as needed
 ]
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = False
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 # Application definition
+
+CSRF_TRUSTED_ORIGINS = ['https://het.tecklive.com','https://127.0.0.1']
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
