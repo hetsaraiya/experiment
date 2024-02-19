@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i%)s)7z+&wv6++)bi=5!%d$dk)$qfb1hpzwmun06-n#!b$)%ct'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = [ "het.tecklive.com", "127.0.0.1", "localhost" ]
+ALLOWED_HOSTS = [ "het.tecklive.com", "127.0.0.1", "localhost", "*" ]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React development server
@@ -40,13 +40,9 @@ CORS_ALLOWED_ORIGINS = [
     # Add other origins as needed
 ]
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
 # Application definition
 
-CSRF_TRUSTED_ORIGINS = ['https://het.tecklive.com','https://127.0.0.1']
+# CSRF_TRUSTED_ORIGINS = ['https://het.tecklive.com','https://127.0.0.1']
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
@@ -149,16 +145,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+
+STATIC_URL = '/home/ubuntu/info/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_URL= "/static/"
-MEDIA_ROOT= os.path.join(BASE_DIR, "media")
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-MEDIA_URL="/media/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),os.path.join(BASE_DIR, "static/img"),os.path.join(BASE_DIR, "media"),]
+#STATIC_URL= "/static/"
+#MEDIA_ROOT= os.path.join(BASE_DIR, "media")
+STATIC_ROOT = "/home/ubuntu/info/static/"
+MEDIA_URL="/home/ubuntu/info/media/"
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    '/home/ubuntu/info/staticfiles/',
+]
