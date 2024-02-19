@@ -2,7 +2,6 @@ import datetime
 from importlib.resources import contents
 from multiprocessing import AuthenticationError
 import os
-from turtle import mode, title
 from django.db import models
 
 # Create your models here.
