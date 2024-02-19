@@ -1,6 +1,5 @@
-from asyncio.windows_events import NULL
 import json
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from blog.models import Post
 from django.contrib.auth.models import User
@@ -13,8 +12,8 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.auth import authenticate, login, logout
-from django.views.decorators.csrf import csrf_exempt,csrf_protect
-#from . tokens import generate_token
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
+
 # Create your views here.
 
 @csrf_exempt
@@ -29,9 +28,7 @@ def admin_home(request):
 def allblogs(request):
       if request.method == 'GET':
             allPosts = Post.objects.filter(status='Approved').order_by('-timeStamp') 
-            # allPosts = Post.objects.all().order_by('-timeStamp') 
             context = {'allPosts' : allPosts}
-            # return render(request,'admin_use/allblogs.html',context)
             data = serializers.serialize("json", allPosts)
             print(data)
             return HttpResponse(data, content_type="application/json")
@@ -51,8 +48,6 @@ def signin(request):
             allPosts = Post.objects.filter(status='Waiting')
             context = {'allPosts' : allPosts}
             return render(request,'admin_use/home.html',context)
-            # messages.success(request, "Logged In Sucessfully!!")
-            
         else:
             messages.error(request, "Bad Credentials!!")
             return render(request, "admin_use/login.html")
@@ -64,9 +59,8 @@ def blogPost(request, slug):
       post = Post.objects.filter(slug=slug).first() 
       context = {'post' : post}  
 
-      if post != NULL:  
+      if post is not None:  
             return render(request,'admin_use/blogpost.html',context)
-
       else:
             allPosts = Post.objects.filter(status='Waiting')
             context = {'allPosts' : allPosts}
@@ -77,9 +71,8 @@ def allblogs_blogpost(request,slug):
       post = Post.objects.filter(slug=slug).first() 
       context = {'post' : post}  
 
-      if post != NULL:  
+      if post is not None:  
             return render(request,'admin_use/allblog_blogpost.html',context)
-
       else:
             allPosts = Post.objects.filter(status='Waiting')
             context = {'allPosts' : allPosts}
@@ -91,8 +84,6 @@ def blog_accept(request , slug):
       post = Post.objects.filter(slug=slug).first() 
       post.status = "Approved"
       post.save() 
-     
-      
       return redirect('admin_home')
 
 
@@ -101,8 +92,6 @@ def blog_decline(request , slug):
       post = Post.objects.filter(slug=slug).first() 
       post.status = "Decline"
       post.save() 
-     
-     
       return redirect('admin_home')
 
 
@@ -117,7 +106,7 @@ def signup(request):
         pass2 = request.POST.get('pass2')
         
         if User.objects.filter(username=username):
-            messages.error(request, "Username already exist! Please try some other username.")
+            messages.error(request, "Username already exists! Please try some other username.")
             return render(request,'admin_use/createuser.html') 
         
         if User.objects.filter(email=email).exists():
@@ -125,34 +114,27 @@ def signup(request):
             return render(request,'admin_use/createuser.html') 
         
         if len(username)>20:
-            messages.error(request, "Username must be under 20 charcters!!")
+            messages.error(request, "Username must be under 20 characters!!")
             allPosts = Post.objects.filter(status='Waiting')
             context = {'allPosts' : allPosts}
             return render(request,'admin_use/createuser.html')  
         
         if pass1 != pass2:
-            messages.error(request, "Passwords didn't matched!!")
+            messages.error(request, "Passwords didn't match!!")
             allPosts = Post.objects.filter(status='Waiting')
             context = {'allPosts' : allPosts}
             return render(request,'admin_use/createuser.html') 
         
-       
-        
         myuser = User.objects.create_user(username, email, pass1)
         myuser.first_name = fname
         myuser.last_name = lname
-        # myuser.is_active = False
         myuser.is_active = True
         myuser.save()
-        messages.success(request, "Your Account has been created succesfully!! Please check mail for confirmation")
-        
-        
+        messages.success(request, "Your Account has been created successfully!! Please check email for confirmation")
   
         return HttpResponse(json.dumps({"msg": " your details updated successfully."}),content_type="application/json",)
         
-        
     return HttpResponse(json.dumps({"msg": " your details updated successfully."}),content_type="application/json",)
-
 
 
 @csrf_exempt
